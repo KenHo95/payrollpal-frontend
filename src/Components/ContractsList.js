@@ -27,9 +27,6 @@ const ContractsList = () => {
     setContracts(data.data);
   };
 
-  // const createData = (name, calories, fat, carbs, protein) => {
-  //   return { name, calories, fat, carbs, protein };
-
   const contractList = contracts.map((contracts, ind) => {
     return (
       // <li key={ind}>{contracts.id}</li>;
@@ -54,23 +51,42 @@ const ContractsList = () => {
 
   return (
     <div>
-      Contracts:
+      Contract List
+      <br />
+      <br />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>No</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Creator</TableCell>
-              <TableCell>Start Date</TableCell>
-              <TableCell>End Date</TableCell>
-              <TableCell>Payment Status</TableCell>
-              <TableCell>Approvel Status</TableCell>
+              <TableCell align="right">No</TableCell>
+              <TableCell align="right">Description</TableCell>
+              <TableCell align="right">Amount</TableCell>
+              <TableCell align="right">Status</TableCell>
+              <TableCell align="right">Creator</TableCell>
+              <TableCell align="right">Start Date</TableCell>
+              <TableCell align="right">End Date</TableCell>
+              <TableCell align="right">Payment Status</TableCell>
+              <TableCell align="right">Approval Status</TableCell>
             </TableRow>
-            {/* <TableBody>contractList</TableBody> */}
           </TableHead>
+          {/* <TableBody>contractList</TableBody> */}
+          <TableBody>
+            <TableRow
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                1
+              </TableCell>
+              <TableCell align="right">Placeholder</TableCell>
+              <TableCell align="right">PH</TableCell>
+              <TableCell align="right">PH</TableCell>
+              <TableCell align="right">PH</TableCell>
+              <TableCell align="right">PH</TableCell>
+              <TableCell align="right">PH</TableCell>
+              <TableCell align="right">PH</TableCell>
+              <TableCell align="right">PH</TableCell>
+            </TableRow>
+          </TableBody>
         </Table>
       </TableContainer>
     </div>
