@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import ContractsList from "../Components/ContractsList";
+import AddCreatorForm from "../Components/AddCreatorForm";
+import AddContractForm from "../Components/AddContractForm";
 
 import jwt_decode from "jwt-decode";
 
@@ -21,7 +23,7 @@ const Home = () => {
       try {
         const accessToken = await getAccessTokenSilently({
           authorizationParams: {
-            audience: "https://payrollpal/api",
+            audience: process.env.REACT_APP_API_AUDIENCE,
             scope: "profile email",
           },
         });
@@ -78,6 +80,12 @@ const Home = () => {
           Log Out
         </button>
       )}
+      <br />
+      <br />
+      <AddContractForm />
+      <br />
+      <br />
+      <AddCreatorForm />
       <br />
       <br />
       <ContractsList />
