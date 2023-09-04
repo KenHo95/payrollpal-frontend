@@ -14,7 +14,7 @@ root.render(
       authorizationParams={{
         redirect_uri: window.location.origin,
         audience: process.env.REACT_APP_API_AUDIENCE,
-        scope: "profile email",
+        scope: "profile email write:contract",
       }}
     >
       <BrowserRouter>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Button from "@mui/material/Button";
+import { useAuth0 } from "@auth0/auth0-react";
+
+// import Button from "@mui/material/Button";
 import { BACKEND_URL } from "../constants";
 
 const AddCreatorForm = () => {
@@ -13,6 +15,8 @@ const AddCreatorForm = () => {
   const [bankIdentifierCode, setBankIdentifierCode] = useState("");
   const [bankName, setBankName] = useState("");
   const [residenceCountry, setResidenceCountry] = useState("");
+
+  const { getAccessTokenSilently } = useAuth0();
 
   const handleChange = (event) => {
     switch (event.target.name) {
@@ -47,16 +51,31 @@ const AddCreatorForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${BACKEND_URL}/creators`, {
-        name,
-        tiktokHandle,
-        email,
-        address,
-        bankAccountNum,
-        bankIdentifierCode,
-        bankName,
-        residenceCountry,
+      // Retrieve access token
+      const accessToken = await getAccessTokenSilently({
+        audience: process.env.REACT_APP_API_AUDIENCE,
+        scope: "write:contract",
       });
+
+      // Send post req
+      await axios.post(
+        `${BACKEND_URL}/creators`,
+        {
+          name,
+          tiktokHandle,
+          email,
+          address,
+          bankAccountNum,
+          bankIdentifierCode,
+          bankName,
+          residenceCountry,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
     } catch (err) {
       console.log(err);
     }

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Button from "@mui/material/Button";
+import { useAuth0 } from "@auth0/auth0-react";
+
+// import Button from "@mui/material/Button";
+// import jwt_decode from "jwt-decode";
 
 import { BACKEND_URL } from "../constants";
 
@@ -11,8 +14,10 @@ const AddContractForm = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [noOfPostRequired, setNoOfPostRequired] = useState("");
-  const [creatorId, setCreatorId] = useState("");
+  const [creatorId, setCreatorId] = useState(1); // set 1 to reflect default value for first dropdown value
   const [creators, setCreators] = useState([]);
+
+  const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     // get updated list of creators
@@ -31,7 +36,7 @@ const AddContractForm = () => {
     return (
       <option
         key={ind}
-        value={ind}
+        value={creator.id}
       >{`${creator.name} (${creator.tiktok_handle})`}</option>
     );
   });
@@ -62,17 +67,36 @@ const AddContractForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await axios.post(`${BACKEND_URL}/contracts`, {
-        description,
-        amountSgd,
-        startDate,
-        endDate,
-        noOfPostRequired,
-        creatorId,
+      // Retrieve access token
+      const accessToken = await getAccessTokenSilently({
+        audience: process.env.REACT_APP_API_AUDIENCE,
+        scope: "write:contract",
       });
-    } catch (err) {
-      console.log(err);
+
+      // var decoded = jwt_decode(accessToken);
+      // console.log(accessToken);
+      // console.log(decoded);
+
+      await axios.post(
+        `${BACKEND_URL}/contracts`,
+        {
+          description,
+          amountSgd,
+          startDate,
+          endDate,
+          noOfPostRequired,
+          creatorId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+    } catch (e) {
+      console.log(e.message);
     }
 
     setDescription("");
