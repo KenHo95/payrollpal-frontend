@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import ContractsList from "../Components/ContractsList";
+import ApprovePage from "./ApprovePage";
 import AddCreatorForm from "../Components/AddCreatorForm";
 import AddContractForm from "../Components/AddContractForm";
 
 import jwt_decode from "jwt-decode";
 
-const Home = () => {
+const HomePage = () => {
   const [userPermission, setUserPermission] = useState(null);
 
   const {
@@ -88,8 +89,18 @@ const Home = () => {
       <AddCreatorForm />
       <br />
       <br />
-      <ContractsList />
+      Contract List
+      <br />
+      <br />
+      <ContractsList filter="None" />
+      <br />
+      <br />
+      <ApprovePage />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 };
-export default Home;
+export default HomePage;

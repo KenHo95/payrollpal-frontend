@@ -54,7 +54,7 @@ const AddCreatorForm = () => {
       // Retrieve access token
       const accessToken = await getAccessTokenSilently({
         audience: process.env.REACT_APP_API_AUDIENCE,
-        scope: "write:contract",
+        scope: "write:contract", // request admin scope
       });
 
       // Send post req

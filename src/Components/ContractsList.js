@@ -1,6 +1,8 @@
 import { React, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
+import jwt_decode from "jwt-decode";
 
 // MUI
 import Table from "@mui/material/Table";
@@ -10,12 +12,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 
 import { BACKEND_URL } from "../constants.js";
 
-const ContractsList = () => {
+const ContractsList = (props) => {
   const [contracts, setContracts] = useState([]);
-  const navigate = useNavigate();
+  const { getAccessTokenSilently } = useAuth0();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     getContracts();
@@ -23,7 +27,12 @@ const ContractsList = () => {
   }, []);
 
   const getContracts = async () => {
-    const data = await axios.get(`${BACKEND_URL}/contracts`);
+    let data = [];
+    if (props.filter === "None") {
+      data = await axios.get(`${BACKEND_URL}/contracts`);
+    } else if (props.filter === "pendingApproval") {
+      data = await axios.get(`${BACKEND_URL}/contracts/pending-approval`);
+    }
     setContracts(data.data);
   };
 
@@ -39,6 +48,37 @@ const ContractsList = () => {
       // minute: "numeric",
       // second: "numeric",
     });
+  };
+
+  const handleApproveButtonClick = async (id) => {
+    // e.preventDefault();
+    try {
+      // Retrieve access token
+      const accessToken = await getAccessTokenSilently({
+        audience: process.env.REACT_APP_API_AUDIENCE,
+        scope: "write:approve-contract", // request content manager scope
+      });
+
+      // decode access token to get user permission
+      // var decoded = jwt_decode(accessToken);
+      // console.log(decoded);
+
+      // Send post req
+      await axios.put(
+        `${BACKEND_URL}/contracts/approve`,
+        {
+          id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      getContracts();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const contractList = contracts.map((contracts, ind) => {
@@ -67,15 +107,19 @@ const ContractsList = () => {
         </TableCell>
         {/* <TableCell>{contracts.payment_id}</TableCell> */}
         <TableCell>{contracts.no_of_post_required}</TableCell>
+        {props.filter === "pendingApproval" && (
+          <TableCell>
+            <Button onClick={() => handleApproveButtonClick(contracts.id)}>
+              APPROVE
+            </Button>
+          </TableCell>
+        )}
       </TableRow>
     );
   });
 
   return (
     <div>
-      Contract List
-      <br />
-      <br />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
