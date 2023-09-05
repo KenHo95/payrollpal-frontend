@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
+
+import AddCreatorForm from "../Components/AddCreatorForm";
+import AddContractForm from "../Components/AddContractForm";
 import Button from "@mui/material/Button";
 
-import ContractsList from "../Components/ContractsList";
-
-const ApprovePage = () => {
+const CreatePage = () => {
   const navigate = useNavigate();
 
   return (
@@ -20,12 +21,14 @@ const ApprovePage = () => {
       </Button>
       <br />
       <br />
-      Pending Contracts
+      <AddContractForm />
       <br />
       <br />
-      <ContractsList filter="pendingApproval" />
+      <AddCreatorForm />
+      <br />
+      <br />
     </div>
   );
 };
 
-export default ApprovePage;
+export default CreatePage;

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import ContractsList from "../Components/ContractsList";
-import ApprovePage from "./ApprovePage";
-import AddCreatorForm from "../Components/AddCreatorForm";
-import AddContractForm from "../Components/AddContractForm";
-
 import jwt_decode from "jwt-decode";
+
+import Button from "@mui/material/Button";
+
+import ContractsList from "../Components/ContractsList";
 
 const HomePage = () => {
   const [userPermission, setUserPermission] = useState(null);
+  const navigate = useNavigate();
 
   const {
     loginWithRedirect,
@@ -83,21 +84,36 @@ const HomePage = () => {
       )}
       <br />
       <br />
-      <AddContractForm />
-      <br />
-      <br />
-      <AddCreatorForm />
+      <Button
+        variant="contained"
+        onClick={() => {
+          navigate("/overview");
+        }}
+      >
+        Overview
+      </Button>{" "}
+      <Button
+        variant="contained"
+        onClick={() => {
+          navigate("/create");
+        }}
+      >
+        Create
+      </Button>{" "}
+      <Button
+        variant="contained"
+        onClick={() => {
+          navigate("/approve");
+        }}
+      >
+        Approve
+      </Button>
       <br />
       <br />
       Contract List
       <br />
       <br />
       <ContractsList filter="None" />
-      <br />
-      <br />
-      <ApprovePage />
-      <br />
-      <br />
       <br />
       <br />
     </div>
