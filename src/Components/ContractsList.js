@@ -1,9 +1,7 @@
 import { React, useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import jwt_decode from "jwt-decode";
-
 // MUI
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -19,12 +17,11 @@ import { BACKEND_URL } from "../constants.js";
 const ContractsList = (props) => {
   const [contracts, setContracts] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
-  // const navigate = useNavigate();
 
   useEffect(() => {
     getContracts();
     return;
-  }, []);
+  }, [props.toggleGetContract]);
 
   const getContracts = async () => {
     let data = [];
@@ -32,7 +29,12 @@ const ContractsList = (props) => {
       data = await axios.get(`${BACKEND_URL}/contracts`);
     } else if (props.filter === "pendingApproval") {
       data = await axios.get(`${BACKEND_URL}/contracts/pending-approval`);
+    } else if (props.filter === "creatorContracts") {
+      data = await axios.get(
+        `${BACKEND_URL}/contracts/creator-contracts/${props.userEmail}`
+      );
     }
+
     setContracts(data.data);
   };
 
@@ -40,18 +42,13 @@ const ContractsList = (props) => {
     const date = new Date(dateStr);
     return date.toLocaleString("en-GB", {
       hour12: true,
-      // weekday: "long",
       year: "numeric",
       month: "numeric",
       day: "numeric",
-      // hour: "numeric",
-      // minute: "numeric",
-      // second: "numeric",
     });
   };
 
   const handleApproveButtonClick = async (id) => {
-    // e.preventDefault();
     try {
       // Retrieve access token
       const accessToken = await getAccessTokenSilently({
@@ -81,35 +78,46 @@ const ContractsList = (props) => {
     }
   };
 
-  const contractList = contracts.map((contracts, ind) => {
+  const contractList = contracts.map((contract, ind) => {
     return (
-      // <li key={ind}>{contracts.id}</li>;
       <TableRow
         key={ind}
         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
       >
         <TableCell component="th" scope="row" align="left">
-          {contracts.id}
+          {contract.id}
         </TableCell>
         <TableCell align="left">
-          {contracts.description.substring(0, 25) + "..."}
+          {contract.description.substring(0, 25) + "..."}
+        </TableCell>
+        <TableCell align="left">{Math.round(contract.amount_sgd, 2)}</TableCell>
+        {contract.creator_id && (
+          <TableCell align="left">{contract.creator_id}</TableCell>
+        )}
+        <TableCell align="left">{contract.contract_status}</TableCell>
+        <TableCell align="left">
+          {dateStrTodateFormat(contract.start_date)}
         </TableCell>
         <TableCell align="left">
-          {Math.round(contracts.amount_sgd, 2)}
+          {dateStrTodateFormat(contract.end_date)}
         </TableCell>
-        <TableCell align="left">{contracts.creator_id}</TableCell>
-        <TableCell align="left">{contracts.contract_status}</TableCell>
-        <TableCell align="left">
-          {dateStrTodateFormat(contracts.start_date)}
-        </TableCell>
-        <TableCell align="left">
-          {dateStrTodateFormat(contracts.end_date)}
-        </TableCell>
-        {/* <TableCell>{contracts.payment_id}</TableCell> */}
-        <TableCell>{contracts.no_of_post_required}</TableCell>
+        {/* <TableCell>{contract.payment_id}</TableCell> */}
+        <TableCell>{contract.no_of_post_required}</TableCell>
+        {props.filter === "creatorContracts" && (
+          <TableCell>
+            <Button
+              onClick={() => {
+                props.setShowSubmitPostLinkButton(true);
+                props.setSelectedContract(contract.id);
+              }}
+            >
+              Submit Post Link
+            </Button>
+          </TableCell>
+        )}
         {props.filter === "pendingApproval" && (
           <TableCell>
-            <Button onClick={() => handleApproveButtonClick(contracts.id)}>
+            <Button onClick={() => handleApproveButtonClick(contract.id)}>
               APPROVE
             </Button>
           </TableCell>
@@ -127,7 +135,9 @@ const ContractsList = (props) => {
               <TableCell align="left">No</TableCell>
               <TableCell align="left">Description</TableCell>
               <TableCell align="left">Amount ($SGD)</TableCell>
-              <TableCell align="left">Creator</TableCell>
+              {contracts.creator_id && (
+                <TableCell align="left">Creator</TableCell>
+              )}
               <TableCell align="left">Status</TableCell>
               <TableCell align="left">Start Date</TableCell>
               <TableCell align="left">End Date</TableCell>

@@ -6,6 +6,7 @@ import jwt_decode from "jwt-decode";
 import Button from "@mui/material/Button";
 
 import ContractsList from "../Components/ContractsList";
+import CreatorUpdatePostPage from "./CreatorUpdatePostPage";
 
 const HomePage = () => {
   const [userPermission, setUserPermission] = useState(null);
@@ -43,9 +44,8 @@ const HomePage = () => {
             setUserPermission("Content Manager");
             break;
           default:
-            setUserPermission(
-              "Request admin to enable user role for this account"
-            );
+            setUserPermission("Creator");
+          // setUserPermission("Request admin to activate this account");
         }
       } catch (e) {
         console.log(e.message);
@@ -56,6 +56,13 @@ const HomePage = () => {
 
     return;
   }, [getAccessTokenSilently, user?.sub]);
+
+  let tableHeading = "";
+  if (userPermission !== "Creator") {
+    tableHeading = "Contract List";
+  } else {
+    tableHeading = "Contracts In Progress";
+  }
 
   return (
     <div>
@@ -68,12 +75,10 @@ const HomePage = () => {
           Role: {userPermission}
         </div>
       )}
-      {!isAuthenticated && (
+      <br />
+      {!isAuthenticated ? (
         <button onClick={() => loginWithRedirect()}>Log In</button>
-      )}
-      <br />
-      <br />
-      {isAuthenticated && (
+      ) : (
         <button
           onClick={() =>
             logout({ logoutParams: { returnTo: window.location.origin } })
@@ -84,36 +89,48 @@ const HomePage = () => {
       )}
       <br />
       <br />
-      <Button
-        variant="contained"
-        onClick={() => {
-          navigate("/overview");
-        }}
-      >
-        Overview
-      </Button>{" "}
-      <Button
-        variant="contained"
-        onClick={() => {
-          navigate("/create");
-        }}
-      >
-        Create
-      </Button>{" "}
-      <Button
-        variant="contained"
-        onClick={() => {
-          navigate("/approve");
-        }}
-      >
-        Approve
-      </Button>
+      {isAuthenticated && (
+        <Button
+          variant="contained"
+          onClick={() => {
+            navigate("/overview");
+          }}
+        >
+          Overview
+        </Button>
+      )}{" "}
+      {userPermission === "Admin" && (
+        <Button
+          variant="contained"
+          onClick={() => {
+            navigate("/create");
+          }}
+        >
+          Create
+        </Button>
+      )}{" "}
+      {userPermission === "Content Manager" && (
+        <Button
+          variant="contained"
+          onClick={() => {
+            navigate("/approve");
+          }}
+        >
+          Approve
+        </Button>
+      )}
       <br />
       <br />
-      Contract List
+      {user?.email && tableHeading}
       <br />
       <br />
-      <ContractsList filter="None" />
+      {user?.email && userPermission !== "Creator" && (
+        <ContractsList filter="None" />
+      )}
+      {user?.email && userPermission === "Creator" && (
+        <CreatorUpdatePostPage userEmail={user.email} />
+      )}
+      {!user?.email && "Login to use app"}
       <br />
       <br />
     </div>
