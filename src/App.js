@@ -10,7 +10,6 @@ function App() {
       <header className="App-header">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          {/* <Route path="/overview" element={<HomePage />} /> */}
           <Route path="/create" element={<CreatePage />} />
           <Route path="/approve" element={<ApprovePage />} />
         </Routes>

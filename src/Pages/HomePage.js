@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 
 import Button from "@mui/material/Button";
 
+import Charts from "../Components/Charts";
 import ContractsList from "../Components/ContractsList";
 import CreatorUpdatePostPage from "./CreatorUpdatePostPage";
 
@@ -89,16 +90,6 @@ const HomePage = () => {
       )}
       <br />
       <br />
-      {isAuthenticated && (
-        <Button
-          variant="contained"
-          onClick={() => {
-            navigate("/overview");
-          }}
-        >
-          Overview
-        </Button>
-      )}{" "}
       {userPermission === "Admin" && (
         <Button
           variant="contained"
@@ -119,6 +110,9 @@ const HomePage = () => {
           Approve
         </Button>
       )}
+      <br />
+      <br />
+      <Charts />
       <br />
       <br />
       {user?.email && tableHeading}
