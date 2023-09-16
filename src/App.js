@@ -1,20 +1,82 @@
 import "./App.css";
-import { Routes, Route, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import jwt_decode from "jwt-decode";
+
 import HomePage from "./Pages/HomePage";
 import CreatePage from "./Pages/CreatePage";
 import ApprovePage from "./Pages/ApprovePage";
 import NavBar from "./Components/NavBar";
 
 function App() {
+  const [userPermission, setUserPermission] = useState(null);
+  const {
+    loginWithRedirect,
+    isAuthenticated,
+    user,
+    isLoading,
+    getAccessTokenSilently,
+  } = useAuth0();
+
+  useEffect(() => {
+    // set user permission based on auth0 permission
+    const getToken = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently({
+          authorizationParams: {
+            audience: process.env.REACT_APP_API_AUDIENCE,
+            scope: "profile email",
+          },
+        });
+        // decode access token to get user permission
+        var decoded = jwt_decode(accessToken);
+
+        // set user permission
+        switch (decoded.permissions[0]) {
+          case "write:contract":
+            setUserPermission("Admin");
+            break;
+          case "write:approve-contract":
+            setUserPermission("Content Manager");
+            break;
+          default:
+            setUserPermission("Creator");
+        }
+      } catch (e) {
+        console.log(e.message);
+      }
+    };
+
+    user && getToken();
+
+    return;
+  }, [getAccessTokenSilently, user?.sub]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/create" element={<CreatePage />} />
-          <Route path="/approve" element={<ApprovePage />} />
-        </Routes>
+        {isAuthenticated && (
+          <NavBar user={user} userPermission={userPermission} />
+        )}
+
+        {!isAuthenticated && "Login to use app"}
+        <br />
+        {isLoading && <div>Loading ...</div>}
+        <br />
+        {!isAuthenticated && (
+          <button onClick={() => loginWithRedirect()}>Log In</button>
+        )}
+        {isAuthenticated && (
+          <Routes>
+            <Route
+              path="/"
+              element={<HomePage userPermission={userPermission} />}
+            />
+            <Route path="/create" element={<CreatePage />} />
+            <Route path="/approve" element={<ApprovePage />} />
+          </Routes>
+        )}
       </header>
     </div>
   );

@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import jwt_decode from "jwt-decode";
 // MUI
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -58,10 +57,6 @@ const ContractsList = (props) => {
         audience: process.env.REACT_APP_API_AUDIENCE,
         scope: "write:approve-contract", // request content manager scope
       });
-
-      // decode access token to get user permission
-      // var decoded = jwt_decode(accessToken);
-      // console.log(decoded);
 
       // Send post req
       await axios.put(
@@ -153,8 +148,19 @@ const ContractsList = (props) => {
     );
   });
 
+  let tableHeading = "";
+  if (props.userPermission === "Admin") {
+    tableHeading = "Contract List";
+  } else if (props.userPermission === "Content Manager") {
+    tableHeading = "Contract List";
+  } else {
+    tableHeading = "Contracts In Progress";
+  }
+
   return (
     <div>
+      <h1>{tableHeading}</h1>
+      <br />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

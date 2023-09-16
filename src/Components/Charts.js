@@ -2,19 +2,14 @@ import { React, useState, useEffect } from "react";
 import axios from "axios";
 
 import {
-  LineChart,
-  Line,
   BarChart,
   Bar,
   ComposedChart,
-  Area,
-  AreaChart,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
-  // Scatter,
 } from "recharts";
 
 import { BACKEND_URL } from "../constants.js";
@@ -27,7 +22,6 @@ const Charts = () => {
   useEffect(() => {
     getData();
     getCategoriesData();
-
     return;
   }, []);
 
@@ -48,14 +42,17 @@ const Charts = () => {
     //     `${BACKEND_URL}/contracts/creator-contracts/${props.userEmail}`
     //   );
     // }
+
+    // get data for current fiscal year
+    const currFiscalYear = new Date().getFullYear();
+
     res = await axios.get(
-      `${BACKEND_URL}/contracts/monthly-contract-payment/2023` //update fiscalYear params input
+      `${BACKEND_URL}/contracts/monthly-contract-payment/${currFiscalYear}`
     );
     res2 = await axios.get(
-      `${BACKEND_URL}/categories/monthly-categories-data/2023` //update fiscalYear params input
+      `${BACKEND_URL}/categories/monthly-categories-data/${currFiscalYear}`
     );
 
-    // console.log(res);
     setContractVsPaymentData(res.data);
     setCategoriesData(res2.data);
   };
@@ -99,102 +96,60 @@ const Charts = () => {
   ];
 
   return (
-    // kpi:
-    // total contract value
-    // total payment value
-    // total creators
     <div>
       Monthly Payment Vs Contract Amount ($SGD)
-      <ComposedChart
-        width={700}
-        height={500}
-        data={contractVsPaymentData}
-        margin={{
-          top: 20,
-          right: 20,
-          bottom: 20,
-          left: 20,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        {/* <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" /> */}
-        <Bar dataKey="sumContractAmount" barSize={20} fill="#413ea0" />
-        <Bar dataKey="sumPaymentAmount" barSize={20} fill="#ff7300" />
-        {/* <Line type="monotone" dataKey="sumPaymentAmount" stroke="#ff7300" /> */}
-        {/* <Scatter dataKey="cnt" fill="red" /> */}
-      </ComposedChart>
-      {/*  */}
-      Categories Breakdown (Count)
-      <BarChart
-        width={700}
-        height={500}
-        data={categoriesData}
-        margin={{
-          top: 20,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="monthName" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        {allCategories.map((category, ind) => (
-          // render bar stack for each category
-          <Bar
-            key={ind}
-            dataKey={category.name}
-            stackId="a"
-            fill={barChartColors[ind]}
-          />
-        ))}
-      </BarChart>
+      <div className="Charts">
+        <ComposedChart
+          width={700}
+          height={500}
+          data={contractVsPaymentData}
+          margin={{
+            top: 20,
+            right: 20,
+            bottom: 20,
+            left: 20,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="sumContractAmount" barSize={20} fill="#413ea0" />
+          <Bar dataKey="sumPaymentAmount" barSize={20} fill="#ff7300" />
+        </ComposedChart>
+      </div>
       <br />
-      {/* Approval contract Aging (t-5)
-      <BarChart // change to pending approval contract Aging (t-5)
-        width={500}
-        height={300}
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="contract" fill="#8884d8" barSize={40} />
-      </BarChart>
-      <br /> */}
-      {/* Incomplete contracts Aging (t-5)
-      <BarChart // change to incomplete contracts Aging (t-5)
-        width={500}
-        height={300}
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="contract" fill="#8884d8" barSize={40} />
-      </BarChart> */}
+      Categories Breakdown (Count)
+      <div className="Charts">
+        <BarChart
+          width={700}
+          height={500}
+          data={categoriesData}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="monthName" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          {allCategories.map((category, ind) => (
+            // render bar stack for each category
+            <Bar
+              key={ind}
+              dataKey={category.name}
+              stackId="a"
+              fill={barChartColors[ind]}
+            />
+          ))}
+        </BarChart>
+        <br />
+      </div>
     </div>
   );
 };

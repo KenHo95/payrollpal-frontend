@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-// import Button from "@mui/material/Button";
-// import jwt_decode from "jwt-decode";
 
 import ContractsList from "../Components/ContractsList";
-
 import { BACKEND_URL } from "../constants";
 
 const UpdateContractPost = (props) => {
@@ -42,12 +39,7 @@ const UpdateContractPost = (props) => {
       // Retrieve access token
       const accessToken = await getAccessTokenSilently({
         audience: process.env.REACT_APP_API_AUDIENCE,
-        // scope: "write:contract",
       });
-
-      // var decoded = jwt_decode(accessToken);
-      // console.log(accessToken);
-      // console.log(decoded);
 
       const res = await axios.post(
         `${BACKEND_URL}/posts`,
@@ -63,7 +55,6 @@ const UpdateContractPost = (props) => {
           },
         }
       );
-
       setSubmissionMessage(res.data);
       if (res.data !== "Post Link Submitted")
         setShowSubmitPostLinkButton(false);

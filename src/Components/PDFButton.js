@@ -22,7 +22,6 @@ const PDFButton = (props) => {
 
   return (
     <div>
-      {/* {PayslipPDF(props.contract)} */}
       <PDFDownloadLink
         document={PayslipPDF(props.contract)}
         fileName={`payslip_${props.creator_id}.pdf`}
