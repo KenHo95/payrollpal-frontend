@@ -13,6 +13,7 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 
 import PDFButton from "../Components/PDFButton.js";
+import PostsPreview from "../Components/PostsPreview";
 
 import { BACKEND_URL } from "../constants.js";
 
@@ -90,11 +91,13 @@ const ContractsList = (props) => {
           {contract.id}
         </TableCell>
         <TableCell align="left">
-          {contract.description.substring(0, 25) + "..."}
+          {/* {contract.description.substring(0, 25) + "..."}
+           */}
+          {contract.description}
         </TableCell>
         <TableCell align="left">{Math.round(contract.amount_sgd, 2)}</TableCell>
         {!props.userEmail && (
-          <TableCell align="left">{contract.creator?.name}</TableCell>
+          <TableCell align="left">{contract.creator.name}</TableCell>
         )}
         <TableCell align="left">{contract.contract_status}</TableCell>
         <TableCell align="left">
@@ -110,6 +113,7 @@ const ContractsList = (props) => {
             {contract.categories?.map((category) => category.name).join(", ")}
           </TableCell>
         )}
+        {/* only show submit post link button for creator login */}
         {props.filter === "creatorContracts" && (
           <TableCell>
             <Button
@@ -122,6 +126,7 @@ const ContractsList = (props) => {
             </Button>
           </TableCell>
         )}
+        {/* only show approve button in approve page */}
         {props.filter === "pendingApproval" && (
           <TableCell>
             <Button onClick={() => handleApproveButtonClick(contract.id)}>
@@ -135,13 +140,21 @@ const ContractsList = (props) => {
             <PDFButton contract={contract} />
           </TableCell>
         )}
+        <TableCell>
+          {/* only show post preview button if contract is paid */}
+          {contract.posts.length !== 0 && (
+            <PostsPreview
+              contract_id={contract.id}
+              tiktokHandle={contract.creator.tiktok_handle}
+            />
+          )}
+        </TableCell>
       </TableRow>
     );
   });
 
   return (
     <div>
-      {/* {console.log(contracts)}{" "} */}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -155,8 +168,6 @@ const ContractsList = (props) => {
               <TableCell align="left">End Date</TableCell>
               <TableCell align="left">Post Required (Qty)</TableCell>
               {!props.userEmail && <TableCell align="left">Category</TableCell>}
-              {/* <TableCell align="left">Payment Status</TableCell> */}
-              {/* <TableCell align="left">Approval Status</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>{contractList}</TableBody>

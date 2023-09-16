@@ -6,6 +6,7 @@
     "@auth0/auth0-react": "^2.2.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.9",
     "@mui/material": "^5.14.6",
     "@react-pdf/renderer": "^3.1.12",
     "@testing-library/jest-dom": "^5.17.0",
@@ -19,6 +20,7 @@
     "react-router-dom": "^6.15.0",
     "react-scripts": "^5.0.1",
     "react-select": "^5.7.4",
+    "react-tiktok": "^1.0.0",
     "recharts": "^2.8.0",
     "web-vitals": "^2.1.4"
   },
