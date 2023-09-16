@@ -114,7 +114,7 @@ const UpdateContractPost = (props) => {
       <br />
       <br />
       <ContractsList
-        filter="creatorContracts"
+        filter="creatorContractsInProgress"
         userEmail={props.userEmail}
         setShowSubmitPostLinkButton={setShowSubmitPostLinkButton}
         setSelectedContract={setSelectedContract}

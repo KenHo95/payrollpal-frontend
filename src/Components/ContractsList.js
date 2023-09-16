@@ -31,9 +31,13 @@ const ContractsList = (props) => {
       data = await axios.get(`${BACKEND_URL}/contracts`);
     } else if (props.filter === "pendingApproval") {
       data = await axios.get(`${BACKEND_URL}/contracts/pending-approval`);
-    } else if (props.filter === "creatorContracts") {
+    } else if (props.filter === "creatorContractsInProgress") {
       data = await axios.get(
-        `${BACKEND_URL}/contracts/creator-contracts/${props.userEmail}`
+        `${BACKEND_URL}/contracts/creator-contracts/in-progress/${props.userEmail}`
+      );
+    } else if (props.filter === "creatorContractAll") {
+      data = await axios.get(
+        `${BACKEND_URL}/contracts/creator-contracts/all/${props.userEmail}`
       );
     }
 
@@ -149,10 +153,10 @@ const ContractsList = (props) => {
   });
 
   let tableHeading = "";
-  if (props.userPermission === "Admin") {
-    tableHeading = "Contract List";
-  } else if (props.userPermission === "Content Manager") {
-    tableHeading = "Contract List";
+  if (props.page === "home") {
+    tableHeading = "Contracts List";
+  } else if (props.page === "approve") {
+    tableHeading = "Contracts Pending Approval";
   } else {
     tableHeading = "Contracts In Progress";
   }

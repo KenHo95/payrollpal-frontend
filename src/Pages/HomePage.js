@@ -20,10 +20,19 @@ const HomePage = (props) => {
       <br />
       <br />
       {/* admin and content manager view */}
-      {props.userPermission !== "Creator" && <ContractsList filter="None" />}
+      {props.userPermission !== "Creator" && (
+        <ContractsList filter="None" page="home" />
+      )}
       {/* creator view */}
       {props.userPermission === "Creator" && (
-        <CreatorUpdatePostPage userEmail={user.email} />
+        <div>
+          <CreatorUpdatePostPage userEmail={user.email} />
+          <ContractsList
+            filter="creatorContractAll"
+            page="home"
+            userEmail={user.email}
+          />
+        </div>
       )}
       <br />
       <br />

@@ -1,9 +1,9 @@
 import ContractsList from "../Components/ContractsList";
 
-const ApprovePage = () => {
+const ApprovePage = (props) => {
   return (
     <div>
-      <ContractsList filter="pendingApproval" />
+      <ContractsList filter="pendingApproval" page="approve" />
     </div>
   );
 };

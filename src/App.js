@@ -74,7 +74,10 @@ function App() {
               element={<HomePage userPermission={userPermission} />}
             />
             <Route path="/create" element={<CreatePage />} />
-            <Route path="/approve" element={<ApprovePage />} />
+            <Route
+              path="/approve"
+              element={<ApprovePage userPermission={userPermission} />}
+            />
           </Routes>
         )}
       </header>
