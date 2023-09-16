@@ -22,11 +22,19 @@ import { BACKEND_URL } from "../constants.js";
 const Charts = () => {
   const [contractVsPaymentData, setContractVsPaymentData] = useState([]);
   const [categoriesData, setCategoriesData] = useState([]);
+  const [allCategories, setAllCategories] = useState([]);
 
   useEffect(() => {
     getData();
+    getCategoriesData();
+
     return;
   }, []);
+
+  const getCategoriesData = async () => {
+    const res = await axios.get(`${BACKEND_URL}/categories`);
+    setAllCategories(res.data);
+  };
 
   const getData = async () => {
     let res,
@@ -75,13 +83,28 @@ const Charts = () => {
   //   },
   // ];
 
+  const barChartColors = [
+    // {colours from https://coolors.co/574d68-a38560-c6a15b-f2e86d-d3dfb8}
+    // colours for up to 10 categories
+    "#190b28",
+    "#685762",
+    "#9b9987",
+    "#efa9ae",
+    "#e55381",
+    "#f2e86d",
+    "#413ea0",
+    "#ff7300",
+    "#691e06",
+    "#AAFFE5",
+  ];
+
   return (
     // kpi:
     // total contract value
     // total payment value
     // total creators
     <div>
-      Monthly Payment Vs Contracts
+      Monthly Payment Vs Contract Amount ($SGD)
       <ComposedChart
         width={700}
         height={500}
@@ -105,7 +128,7 @@ const Charts = () => {
         {/* <Scatter dataKey="cnt" fill="red" /> */}
       </ComposedChart>
       {/*  */}
-      Categories Breakdown
+      Categories Breakdown (Count)
       <BarChart
         width={700}
         height={500}
@@ -122,13 +145,15 @@ const Charts = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="Beauty" stackId="a" fill="#190b28" />
-        <Bar dataKey="Entertainment" stackId="a" fill="#685762" />
-        <Bar dataKey="General" stackId="a" fill="#9b9987" />
-        <Bar dataKey="Lifestyle" stackId="a" fill="#efa9ae" />
-        <Bar dataKey="Photography" stackId="a" fill="#e55381" />
-        <Bar dataKey="Product" stackId="a" fill="#f2e86d" />
-        {/* colours from https://coolors.co/574d68-a38560-c6a15b-f2e86d-d3dfb8 */}
+        {allCategories.map((category, ind) => (
+          // render bar stack for each category
+          <Bar
+            key={ind}
+            dataKey={category.name}
+            stackId="a"
+            fill={barChartColors[ind]}
+          />
+        ))}
       </BarChart>
       <br />
       {/* Approval contract Aging (t-5)

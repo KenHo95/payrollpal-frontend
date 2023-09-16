@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+
+import CreatableSelect from "react-select/creatable";
+
 // import Button from "@mui/material/Button";
 // import jwt_decode from "jwt-decode";
 
@@ -14,12 +17,17 @@ const AddContractForm = () => {
   const [noOfPostRequired, setNoOfPostRequired] = useState("");
   const [creatorId, setCreatorId] = useState(1); // set 1 to reflect default value for first dropdown value
   const [creators, setCreators] = useState([]);
+  const [allCategories, setAllCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     // get updated list of creators
     getCreators();
+    getCategoriesData();
+
     return;
   }, []);
 
@@ -77,6 +85,9 @@ const AddContractForm = () => {
       // console.log(accessToken);
       // console.log(decoded);
 
+      // Extract only category IDs to send to backend
+      const selectedCategoryIds = selectedCategories.map(({ value }) => value);
+
       await axios.post(
         `${BACKEND_URL}/contracts`,
         {
@@ -86,6 +97,7 @@ const AddContractForm = () => {
           endDate,
           noOfPostRequired,
           creatorId,
+          selectedCategoryIds,
         },
         {
           headers: {
@@ -103,10 +115,50 @@ const AddContractForm = () => {
     setEndDate("");
     setNoOfPostRequired("");
     setCreatorId("");
+    setSelectedCategories([]);
   };
 
   // mindate input
   const currDate = new Date().toLocaleDateString("fr-ca");
+
+  // categories drop down select
+  const getCategoriesData = async () => {
+    const res = await axios.get(`${BACKEND_URL}/categories`);
+    setAllCategories(res.data);
+  };
+
+  const categoryOptions = allCategories.map((category) => ({
+    // value is what we store
+    value: category.id,
+    // label is what we display
+    label: category.name,
+  }));
+
+  // Make text black in Select field
+  const selectFieldStyles = {
+    option: (provided) => ({
+      ...provided,
+      color: "black",
+    }),
+  };
+
+  const handleCreate = (categoryInput) => {
+    setIsLoading(true);
+    setTimeout(async () => {
+      // update model with created category
+      const res = await axios.post(`${BACKEND_URL}/categories`, {
+        name: categoryInput,
+      });
+      setIsLoading(false);
+      // update categories dropdown with created category
+      setAllCategories((prev) => [...prev, res.data]);
+      // update selected categories with created category
+      setSelectedCategories((prev) => [
+        ...prev,
+        { value: res.data.id, label: res.data.name },
+      ]);
+    }, 1000);
+  };
 
   return (
     <div>
@@ -170,6 +222,22 @@ const AddContractForm = () => {
         <select name="creators" onChange={handleChange}>
           {creatorsDropdownList}
         </select>
+        <br />
+        <br />
+        Categories:{" "}
+        <CreatableSelect
+          isMulti
+          isClearable
+          styles={selectFieldStyles}
+          options={categoryOptions}
+          value={selectedCategories}
+          onChange={(categories) => {
+            setSelectedCategories(categories);
+          }}
+          onCreateOption={handleCreate}
+          isDisabled={isLoading}
+          isLoading={isLoading}
+        />
         <br />
         <input type="submit" value="Submit" />
       </form>

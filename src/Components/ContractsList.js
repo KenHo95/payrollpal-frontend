@@ -141,7 +141,7 @@ const ContractsList = (props) => {
 
   return (
     <div>
-      {console.log(contracts)}{" "}
+      {/* {console.log(contracts)}{" "} */}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
