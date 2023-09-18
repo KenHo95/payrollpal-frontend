@@ -47,20 +47,16 @@
   flex-direction: row; /* Display charts and titles vertically */
   align-items: center; /* Center-align the charts and titles horizontally */
 }
-
 .chart-title {
   font-size: 1.2rem; /* Adjust the title font size as needed */
   font-weight: bold; /* Make the title bold */
   margin-bottom: 20px; /* Add space between title and chart */
   text-align: center; /* Center-align the title */
 }
-
 .Charts {
   display: flex;
-  justify-content: space-between; /* Add space between charts */
   width: 100%; /* Expand the charts to fill the available width */
-  max-width: 1400px; /* Set a maximum width for the charts */
-  margin-bottom: 20px; /* Add space between charts and titles */
+  max-width: 1000px; /* Set a maximum width for the charts */
 }
 /* Style for the heading */
 h1 {
