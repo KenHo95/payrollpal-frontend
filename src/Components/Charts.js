@@ -96,8 +96,10 @@ const Charts = () => {
   ];
 
   return (
-    <div>
-      Monthly Payment Vs Contract Amount ($SGD)
+    <div className="chart-container">
+      <div className="chart-title">
+        <h4>Monthly Payment Vs Contract Amount ($SGD)</h4>
+      </div>
       <div className="Charts">
         <ComposedChart
           width={700}
@@ -120,7 +122,9 @@ const Charts = () => {
         </ComposedChart>
       </div>
       <br />
-      Categories Breakdown (Count)
+      <div className="chart-title">
+        <h4>Categories Breakdown (Count)</h4>
+      </div>
       <div className="Charts">
         <BarChart
           width={700}

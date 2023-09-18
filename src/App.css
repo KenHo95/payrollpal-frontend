@@ -13,8 +13,13 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
+.before-auth-background {
+  background-image: linear-gradient(
+    -20deg,
+    #ddd6f3 0%,
+    #faaca8 100%,
+    #faaca8 100%
+  );
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -37,6 +42,164 @@
   }
 }
 
+.chart-container {
+  display: flex;
+  flex-direction: row; /* Display charts and titles vertically */
+  align-items: center; /* Center-align the charts and titles horizontally */
+}
+
+.chart-title {
+  font-size: 1.2rem; /* Adjust the title font size as needed */
+  font-weight: bold; /* Make the title bold */
+  margin-bottom: 20px; /* Add space between title and chart */
+  text-align: center; /* Center-align the title */
+}
+
 .Charts {
-  margin-left: 12rem;
+  display: flex;
+  justify-content: space-between; /* Add space between charts */
+  width: 100%; /* Expand the charts to fill the available width */
+  max-width: 1400px; /* Set a maximum width for the charts */
+  margin-bottom: 20px; /* Add space between charts and titles */
+}
+/* Style for the heading */
+h1 {
+  font-size: 4rem;
+  color: #333;
+}
+
+h2 {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+h3 {
+  font-size: 2.5rem;
+  color: #f3efef;
+}
+
+h4 {
+  font-size: 1rem;
+  color: #f3efef;
+}
+/* Style for the description */
+p {
+  font-size: 1rem;
+  color: #171111;
+}
+
+/* Style for the logo container */
+.logo-container {
+  text-align: center; /* Center the content horizontally */
+}
+
+.after-auth-background {
+  background-color: #181818;
+}
+
+.create-page {
+  background-color: #000; /* Set your desired background color */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px; /* Add padding as needed */
+}
+.button-container {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: center;
+  padding-bottom: 100px; /* Add space below the last button */
+  border-bottom: 10px solid transparent; /* Add space below each button */
+}
+
+.button-wrapper {
+  margin-bottom: 10px; /* Add space below each button */
+  width: 100%; /* Make the buttons fill the available width */
+}
+
+/* AddContractForm.css */
+.add-contract-form {
+  background-color: #000; /* Set your desired background color */
+  color: white; /* Text color */
+  padding: 20px; /* Add padding as needed */
+}
+
+.add-contract-form h2 {
+  font-size: 2.5rem; /* Header text size */
+  color: white;
+}
+
+.form-field {
+  margin-bottom: 20px; /* Add space between form fields */
+}
+
+.form-field label {
+  display: block; /* Display labels on top of input fields */
+  font-weight: bold; /* Make labels bold */
+  margin-bottom: 5px; /* Add space between label and input field */
+}
+
+.form-field input,
+.form-field select,
+.form-field .react-select__input input {
+  width: 100%; /* Make input fields 100% width */
+  padding: 5px; /* Add padding to input fields */
+}
+
+.form-field .react-select__control {
+  width: 100%;
+}
+
+.form-field .react-select__input input {
+  color: #000; /* Input text color */
+}
+
+.form-field .react-select__option {
+  color: #000; /* Select options text color */
+}
+
+/* AddCreatorForm.css */
+.add-creator-form {
+  background-color: #000; /* Set your desired background color */
+  color: white; /* Text color */
+  padding: 20px; /* Add padding as needed */
+}
+
+.add-creator-form h2 {
+  font-size: 2.5rem; /* Header text size */
+  color: white;
+}
+
+.form-field {
+  margin-bottom: 20px; /* Add space between form fields */
+}
+
+.form-field label {
+  display: block; /* Display labels on top of input fields */
+  font-weight: bold; /* Make labels bold */
+  margin-bottom: 5px; /* Add space between label and input field */
+}
+
+.form-field input {
+  width: 100%; /* Make input fields 100% width */
+  padding: 5px; /* Add padding to input fields */
+}
+
+.form-field input[type="text"] {
+  color: #000; /* Input text color */
+}
+
+.form-field input[type="submit"] {
+  background-color: #007bff; /* Submit button background color */
+  color: white; /* Submit button text color */
+  padding: 10px 20px; /* Submit button padding */
+  border: none; /* Remove button border */
+  cursor: pointer; /* Add cursor pointer on hover */
+  transition: background-color 0.3s; /* Add smooth hover transition */
+}
+
+.form-field input[type="submit"]:hover {
+  background-color: #0056b3; /* Hover background color */
 }

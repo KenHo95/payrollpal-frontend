@@ -91,72 +91,153 @@ const AddCreatorForm = () => {
   };
 
   return (
-    <div>
-      Add Creator
-      <br />
-      <br />
+    // <div>
+    //   Add Creator
+    //   <br />
+    //   <br />
+    //   <form onSubmit={handleSubmit}>
+    //     Name:{" "}
+    //     <input type="text" name="name" value={name} onChange={handleChange} />
+    //     <br />
+    //     Tiktok Handle:{" "}
+    //     <input
+    //       type="text"
+    //       name="tiktokHandle"
+    //       value={tiktokHandle}
+    //       onChange={handleChange}
+    //       required
+    //     />
+    //     <br />
+    //     Email:{" "}
+    //     <input type="text" name="email" value={email} onChange={handleChange} />
+    //     <br />
+    //     Address:{" "}
+    //     <input
+    //       type="text"
+    //       name="address"
+    //       value={address}
+    //       onChange={handleChange}
+    //       required
+    //     />
+    //     <br />
+    //     Bank Account Number:{" "}
+    //     <input
+    //       type="text"
+    //       name="bankAccountNum"
+    //       value={bankAccountNum}
+    //       onChange={handleChange}
+    //       required
+    //     />
+    //     <br />
+    //     Bank Identifier Code:{" "}
+    //     <input
+    //       type="text"
+    //       name="bankIdentifierCode"
+    //       value={bankIdentifierCode}
+    //       onChange={handleChange}
+    //       required
+    //     />
+    //     <br />
+    //     Bank Name:{" "}
+    //     <input
+    //       type="text"
+    //       name="bankName"
+    //       value={bankName}
+    //       onChange={handleChange}
+    //       required
+    //     />
+    //     <br />
+    //     Residence Country:{" "}
+    //     <input
+    //       type="text"
+    //       name="residenceCountry"
+    //       value={residenceCountry}
+    //       onChange={handleChange}
+    //       required
+    //     />
+    //     <br />
+    //     <input type="submit" value="Submit" />
+    //   </form>
+    // </div>
+    <div className="add-creator-form">
+      <h2>Add Creator</h2>
       <form onSubmit={handleSubmit}>
-        Name:{" "}
-        <input type="text" name="name" value={name} onChange={handleChange} />
-        <br />
-        Tiktok Handle:{" "}
-        <input
-          type="text"
-          name="tiktokHandle"
-          value={tiktokHandle}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        Email:{" "}
-        <input type="text" name="email" value={email} onChange={handleChange} />
-        <br />
-        Address:{" "}
-        <input
-          type="text"
-          name="address"
-          value={address}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        Bank Account Number:{" "}
-        <input
-          type="text"
-          name="bankAccountNum"
-          value={bankAccountNum}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        Bank Identifier Code:{" "}
-        <input
-          type="text"
-          name="bankIdentifierCode"
-          value={bankIdentifierCode}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        Bank Name:{" "}
-        <input
-          type="text"
-          name="bankName"
-          value={bankName}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        Residence Country:{" "}
-        <input
-          type="text"
-          name="residenceCountry"
-          value={residenceCountry}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        <input type="submit" value="Submit" />
+        <div className="form-field">
+          <label>Name:</label>
+          <input type="text" name="name" value={name} onChange={handleChange} />
+        </div>
+        <div className="form-field">
+          <label>Tiktok Handle:</label>
+          <input
+            type="text"
+            name="tiktokHandle"
+            value={tiktokHandle}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-field">
+          <label>Email:</label>
+          <input
+            type="text"
+            name="email"
+            value={email}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-field">
+          <label>Address:</label>
+          <input
+            type="text"
+            name="address"
+            value={address}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-field">
+          <label>Bank Account Number:</label>
+          <input
+            type="text"
+            name="bankAccountNum"
+            value={bankAccountNum}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-field">
+          <label>Bank Identifier Code:</label>
+          <input
+            type="text"
+            name="bankIdentifierCode"
+            value={bankIdentifierCode}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-field">
+          <label>Bank Name:</label>
+          <input
+            type="text"
+            name="bankName"
+            value={bankName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-field">
+          <label>Residence Country:</label>
+          <input
+            type="text"
+            name="residenceCountry"
+            value={residenceCountry}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-field">
+          <input type="submit" value="Submit" />
+        </div>
       </form>
     </div>
   );

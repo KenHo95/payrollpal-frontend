@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import jwt_decode from "jwt-decode";
+import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
+import Button from "@mui/material/Button";
 
 import HomePage from "./Pages/HomePage";
 import CreatePage from "./Pages/CreatePage";
@@ -54,18 +56,43 @@ function App() {
   }, [getAccessTokenSilently, user?.sub]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        {isAuthenticated && (
-          <NavBar user={user} userPermission={userPermission} />
+    <div
+      className={`App ${
+        isAuthenticated ? "after-auth-background" : "before-auth-background"
+      }`}
+    >
+      {isAuthenticated && (
+        <NavBar user={user} userPermission={userPermission} />
+      )}
+      <header
+        className={
+          isAuthenticated ? "after-auth-background" : "before-auth-background"
+        }
+      >
+        {!isAuthenticated && (
+          <div className="logo-container">
+            <h1>💼</h1>
+            <h2>PayrollPal</h2>
+            <p>
+              {" "}
+              Empowering HR and Content Creators to Seamlessly Manage Payrolls
+              and Projects, All in One Place. Log in to try our app now!
+            </p>
+          </div>
         )}
-
-        {!isAuthenticated && "Login to use app"}
         <br />
         {isLoading && <div>Loading ...</div>}
-        <br />
+
         {!isAuthenticated && (
-          <button onClick={() => loginWithRedirect()}>Log In</button>
+          <Button
+            variant="outlined"
+            startIcon={<LoginRoundedIcon />}
+            onClick={() => loginWithRedirect()}
+            Button
+            size="large"
+          >
+            Log In
+          </Button>
         )}
         {isAuthenticated && (
           <Routes>

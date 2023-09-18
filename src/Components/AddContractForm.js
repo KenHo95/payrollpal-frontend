@@ -161,85 +161,171 @@ const AddContractForm = () => {
   };
 
   return (
-    <div>
-      {/* {console.log(currDate)} */}
-      Add Contract
-      <br />
-      <br />
+    // <div>
+    //   {/* {console.log(currDate)} */}
+    //   Add Contract
+    //   <br />
+    //   <br />
+    //   <form onSubmit={handleSubmit}>
+    //     Description:{" "}
+    //     <input
+    //       type="text"
+    //       name="description"
+    //       value={description}
+    //       onChange={handleChange}
+    //       minLength="8"
+    //       required
+    //     />
+    //     <br />
+    //     {"Amount ($SGD):"}{" "}
+    //     <input
+    //       type="number"
+    //       name="amountSgd"
+    //       value={amountSgd}
+    //       onChange={handleChange}
+    //       min="1"
+    //       step="0.01"
+    //       required
+    //     />
+    //     <br />
+    //     Start Date:{" "}
+    //     <input
+    //       type="date"
+    //       name="startDate"
+    //       value={startDate}
+    //       min={currDate}
+    //       onChange={handleChange}
+    //       required
+    //     />
+    //     <br />
+    //     End Date:{" "}
+    //     <input
+    //       type="date"
+    //       name="endDate"
+    //       value={endDate}
+    //       min={startDate}
+    //       onChange={handleChange}
+    //       required
+    //     />
+    //     <br />
+    //     Number Of Post Required:{" "}
+    //     <input
+    //       type="number"
+    //       name="noOfPostRequired"
+    //       value={noOfPostRequired}
+    //       onChange={handleChange}
+    //       min="1"
+    //       required
+    //     />
+    //     <br />
+    //     Creator:{" "}
+    //     <select name="creators" onChange={handleChange}>
+    //       {creatorsDropdownList}
+    //     </select>
+    //     <br />
+    //     <br />
+    //     Categories:{" "}
+    //     <CreatableSelect
+    //       isMulti
+    //       isClearable
+    //       styles={selectFieldStyles}
+    //       options={categoryOptions}
+    //       value={selectedCategories}
+    //       onChange={(categories) => {
+    //         setSelectedCategories(categories);
+    //       }}
+    //       onCreateOption={handleCreate}
+    //       isDisabled={isLoading}
+    //       isLoading={isLoading}
+    //     />
+    //     <br />
+    //     <input type="submit" value="Submit" />
+    //   </form>
+    // </div>
+    <div className="add-contract-form">
+      <h2>Add Contract</h2>
       <form onSubmit={handleSubmit}>
-        Description:{" "}
-        <input
-          type="text"
-          name="description"
-          value={description}
-          onChange={handleChange}
-          minLength="8"
-          required
-        />
-        <br />
-        {"Amount ($SGD):"}{" "}
-        <input
-          type="number"
-          name="amountSgd"
-          value={amountSgd}
-          onChange={handleChange}
-          min="1"
-          step="0.01"
-          required
-        />
-        <br />
-        Start Date:{" "}
-        <input
-          type="date"
-          name="startDate"
-          value={startDate}
-          min={currDate}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        End Date:{" "}
-        <input
-          type="date"
-          name="endDate"
-          value={endDate}
-          min={startDate}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        Number Of Post Required:{" "}
-        <input
-          type="number"
-          name="noOfPostRequired"
-          value={noOfPostRequired}
-          onChange={handleChange}
-          min="1"
-          required
-        />
-        <br />
-        Creator:{" "}
-        <select name="creators" onChange={handleChange}>
-          {creatorsDropdownList}
-        </select>
-        <br />
-        <br />
-        Categories:{" "}
-        <CreatableSelect
-          isMulti
-          isClearable
-          styles={selectFieldStyles}
-          options={categoryOptions}
-          value={selectedCategories}
-          onChange={(categories) => {
-            setSelectedCategories(categories);
-          }}
-          onCreateOption={handleCreate}
-          isDisabled={isLoading}
-          isLoading={isLoading}
-        />
-        <br />
-        <input type="submit" value="Submit" />
+        <div className="form-field">
+          <label>Description:</label>
+          <input
+            type="text"
+            name="description"
+            value={description}
+            onChange={handleChange}
+            minLength="8"
+            required
+          />
+        </div>
+        <div className="form-field">
+          <label>{"Amount ($SGD):"}</label>
+          <input
+            type="number"
+            name="amountSgd"
+            value={amountSgd}
+            onChange={handleChange}
+            min="1"
+            step="0.01"
+            required
+          />
+        </div>
+        <div className="form-field">
+          <label>Start Date:</label>
+          <input
+            type="date"
+            name="startDate"
+            value={startDate}
+            min={currDate}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-field">
+          <label>End Date:</label>
+          <input
+            type="date"
+            name="endDate"
+            value={endDate}
+            min={startDate}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-field">
+          <label>Number Of Post Required:</label>
+          <input
+            type="number"
+            name="noOfPostRequired"
+            value={noOfPostRequired}
+            onChange={handleChange}
+            min="1"
+            required
+          />
+        </div>
+        <div className="form-field">
+          <label>Creator:</label>
+          <select name="creators" onChange={handleChange}>
+            {creatorsDropdownList}
+          </select>
+        </div>
+        <div className="form-field">
+          <label>Categories:</label>
+          <CreatableSelect
+            isMulti
+            isClearable
+            styles={selectFieldStyles}
+            options={categoryOptions}
+            value={selectedCategories}
+            onChange={(categories) => {
+              setSelectedCategories(categories);
+            }}
+            onCreateOption={handleCreate}
+            isDisabled={isLoading}
+            isLoading={isLoading}
+          />
+        </div>
+        <div className="form-field">
+          <input type="submit" value="Submit" />
+        </div>
       </form>
     </div>
   );

@@ -163,7 +163,7 @@ const ContractsList = (props) => {
 
   return (
     <div>
-      <h1>{tableHeading}</h1>
+      <h3>{tableHeading}</h3>
       <br />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">

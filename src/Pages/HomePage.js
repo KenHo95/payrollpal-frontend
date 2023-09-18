@@ -14,7 +14,7 @@ const HomePage = (props) => {
     <div>
       <br />
       <br />
-      <h1>Insights</h1>
+      <h3>Insights</h3>
       <br />
       <Charts />
       <br />
