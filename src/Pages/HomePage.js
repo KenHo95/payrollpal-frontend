@@ -27,11 +27,6 @@ const HomePage = (props) => {
       {props.userPermission === "Creator" && (
         <div>
           <CreatorUpdatePostPage userEmail={user.email} />
-          <ContractsList
-            filter="creatorContractAll"
-            page="home"
-            userEmail={user.email}
-          />
         </div>
       )}
       <br />

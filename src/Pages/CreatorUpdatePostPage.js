@@ -120,6 +120,12 @@ const UpdateContractPost = (props) => {
         setSelectedContract={setSelectedContract}
         toggleGetContract={toggleGetContract}
       />
+      <ContractsList
+        filter="creatorContractAll"
+        page="home"
+        userEmail={props.userEmail}
+        toggleGetContract={toggleGetContract}
+      />
     </div>
   );
 };
