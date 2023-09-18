@@ -35,12 +35,14 @@ const PostsPreview = (props) => {
     <div key={ind}>
       {/* Posts: */}
       <a href={postsURL.post_url} target="_blank" rel="noopener noreferrer">
-        Post 1
+        {`Post ${ind}`}
       </a>
+      <p>{postsURL.description}</p>
       <TikTok url={postsURL.post_url} />
       {/* <TikTok
         url={postsURL.post_url} 
       /> */}
+      <br />
     </div>
   ));
 

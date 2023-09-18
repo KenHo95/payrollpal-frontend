@@ -113,7 +113,7 @@ const ContractsList = (props) => {
           </TableCell>
         )}
         {/* only show submit post link button for creator login */}
-        {props.filter === "creatorContracts" && (
+        {props.filter === "creatorContractsInProgress" && (
           <TableCell>
             <Button
               onClick={() => {
@@ -134,11 +134,14 @@ const ContractsList = (props) => {
           </TableCell>
         )}
         {/* only show download payslip button if contract is paid */}
-        {contract.contract_status === "Paid" && (
-          <TableCell>
+        <TableCell>
+          {contract.contract_status === "Paid" ? (
             <PDFButton contract={contract} />
-          </TableCell>
-        )}
+          ) : (
+            <p className="placeholderText">1</p>
+          )}
+        </TableCell>
+
         <TableCell>
           {/* only show post preview button if contract is paid */}
           {contract.posts.length !== 0 && (
@@ -178,6 +181,9 @@ const ContractsList = (props) => {
               <TableCell align="left">End Date</TableCell>
               <TableCell align="left">Post Required (Qty)</TableCell>
               {!props.userEmail && <TableCell align="left">Category</TableCell>}
+              <TableCell align="left"></TableCell>
+              <TableCell align="left"></TableCell>
+              {props.page === "approve" && <TableCell align="left"></TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>{contractList}</TableBody>

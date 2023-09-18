@@ -12,7 +12,6 @@ const UpdateContractPost = (props) => {
   const [showSubmitPostLinkButton, setShowSubmitPostLinkButton] =
     useState(false);
   const [selectedContract, setSelectedContract] = useState(null);
-  const [toggleGetContract, setToggleGetContract] = useState(true);
   const [submissionMessage, setSubmissionMessage] = useState("");
 
   const { getAccessTokenSilently } = useAuth0();
@@ -65,7 +64,7 @@ const UpdateContractPost = (props) => {
     setPostDate("");
     setDescription("");
     setPostLink("");
-    setToggleGetContract(!toggleGetContract);
+    props.setToggleGetContract(!props.toggleGetContract);
   };
 
   return (
@@ -118,7 +117,13 @@ const UpdateContractPost = (props) => {
         userEmail={props.userEmail}
         setShowSubmitPostLinkButton={setShowSubmitPostLinkButton}
         setSelectedContract={setSelectedContract}
-        toggleGetContract={toggleGetContract}
+        toggleGetContract={props.toggleGetContract}
+      />
+      <ContractsList
+        filter="creatorContractAll"
+        page="home"
+        userEmail={props.userEmail}
+        toggleGetContract={props.toggleGetContract}
       />
     </div>
   );

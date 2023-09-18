@@ -199,3 +199,11 @@ p {
 .form-field input[type="submit"]:hover {
   background-color: #0056b3; /* Hover background color */
 }
+
+.placeholderText {
+  opacity: 0;
+}
+
+.approvePage {
+  height: 100%;
+}
