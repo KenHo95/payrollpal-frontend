@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import {
   BarChart,
@@ -14,7 +15,8 @@ import {
 
 import { BACKEND_URL } from "../constants.js";
 
-const Charts = () => {
+const Charts = (props) => {
+  const { user } = useAuth0();
   const [contractVsPaymentData, setContractVsPaymentData] = useState([]);
   const [categoriesData, setCategoriesData] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
@@ -31,27 +33,28 @@ const Charts = () => {
   };
 
   const getData = async () => {
+    console.log(props.userPermission);
     let res,
       res2 = [];
-    // if (props.filter === "None") {
-    //   data = await axios.get(`${BACKEND_URL}/contracts`);
-    // } else if (props.filter === "pendingApproval") {
-    //   data = await axios.get(`${BACKEND_URL}/contracts/pending-approval`);
-    // } else if (props.filter === "creatorContracts") {
-    //   data = await axios.get(
-    //     `${BACKEND_URL}/contracts/creator-contracts/${props.userEmail}`
-    //   );
-    // }
 
     // get data for current fiscal year
     const currFiscalYear = new Date().getFullYear();
 
-    res = await axios.get(
-      `${BACKEND_URL}/contracts/monthly-contract-payment/${currFiscalYear}`
-    );
-    res2 = await axios.get(
-      `${BACKEND_URL}/categories/monthly-categories-data/${currFiscalYear}`
-    );
+    if (props.userPermission === "Creator") {
+      res = await axios.get(
+        `${BACKEND_URL}/contracts/monthly-contract-payment/${currFiscalYear}/${user.email}`
+      );
+      res2 = await axios.get(
+        `${BACKEND_URL}/categories/monthly-categories-data/${currFiscalYear}/${user.email}`
+      );
+    } else {
+      res = await axios.get(
+        `${BACKEND_URL}/contracts/monthly-contract-payment/${currFiscalYear}`
+      );
+      res2 = await axios.get(
+        `${BACKEND_URL}/categories/monthly-categories-data/${currFiscalYear}`
+      );
+    }
 
     setContractVsPaymentData(res.data);
     setCategoriesData(res2.data);
@@ -83,7 +86,7 @@ const Charts = () => {
   const barChartColors = [
     // {colours from https://coolors.co/574d68-a38560-c6a15b-f2e86d-d3dfb8}
     // colours for up to 10 categories
-    "#190b28",
+    "#AAFFE5",
     "#685762",
     "#9b9987",
     "#efa9ae",
@@ -92,7 +95,7 @@ const Charts = () => {
     "#413ea0",
     "#ff7300",
     "#691e06",
-    "#AAFFE5",
+    "#190b28",
   ];
 
   return (
