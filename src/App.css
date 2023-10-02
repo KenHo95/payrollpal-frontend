@@ -38,20 +38,16 @@
   flex-direction: row; /* Display charts and titles vertically */
   align-items: center; /* Center-align the charts and titles horizontally */
 }
-
 .chart-title {
   font-size: 1.2rem; /* Adjust the title font size as needed */
   font-weight: bold; /* Make the title bold */
   margin-bottom: 20px; /* Add space between title and chart */
   text-align: center; /* Center-align the title */
 }
-
 .Charts {
   display: flex;
-  justify-content: space-between; /* Add space between charts */
   width: 100%; /* Expand the charts to fill the available width */
-  max-width: 1400px; /* Set a maximum width for the charts */
-  margin-bottom: 20px; /* Add space between charts and titles */
+  max-width: 1000px; /* Set a maximum width for the charts */
 }
 /* Style for the heading */
 h1 {
@@ -141,11 +137,11 @@ p {
 }
 
 .form-field .react-select__input input {
-  color: #000; /* Input text color */
+  color: #c2c2c2; /* Input text color */
 }
 
 .form-field .react-select__option {
-  color: #000; /* Select options text color */
+  color: #e2dede; /* Select options text color */
 }
 
 /* AddCreatorForm.css */
@@ -172,12 +168,15 @@ p {
 .form-field input {
   width: 100%; /* Make input fields 100% width */
   padding: 5px; /* Add padding to input fields */
+  color: #f9f9f9;
 }
 
 .form-field input[type="text"] {
-  color: #000; /* Input text color */
+  color: #000000; /* Input text color */
 }
-
+.form-field input[type="text2"] {
+  color: #f9f9f9; /* Input text color */
+}
 .form-field input[type="submit"] {
   background-color: #007bff; /* Submit button background color */
   color: white; /* Submit button text color */
@@ -197,4 +196,8 @@ p {
 
 .approvePage {
   height: 100%;
+}
+/* UpdateContractPost.css */
+.MuiTextField-root .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: white; /* Set the border color to white */
 }
