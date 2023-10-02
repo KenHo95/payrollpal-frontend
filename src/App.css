@@ -149,11 +149,11 @@ p {
 }
 
 .form-field .react-select__input input {
-  color: #000; /* Input text color */
+  color: #c2c2c2; /* Input text color */
 }
 
 .form-field .react-select__option {
-  color: #000; /* Select options text color */
+  color: #e2dede; /* Select options text color */
 }
 
 /* AddCreatorForm.css */
@@ -181,12 +181,15 @@ p {
 .form-field input {
   width: 100%; /* Make input fields 100% width */
   padding: 5px; /* Add padding to input fields */
+  color: #f9f9f9;
 }
 
 .form-field input[type="text"] {
-  color: #000; /* Input text color */
+  color: #000000; /* Input text color */
 }
-
+.form-field input[type="text2"] {
+  color: #f9f9f9; /* Input text color */
+}
 .form-field input[type="submit"] {
   background-color: #007bff; /* Submit button background color */
   color: white; /* Submit button text color */
@@ -206,4 +209,8 @@ p {
 
 .approvePage {
   height: 100%;
+}
+/* UpdateContractPost.css */
+.MuiTextField-root .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: white; /* Set the border color to white */
 }
