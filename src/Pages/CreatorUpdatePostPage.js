@@ -13,6 +13,7 @@ const UpdateContractPost = (props) => {
     useState(false);
   const [selectedContract, setSelectedContract] = useState(null);
   const [submissionMessage, setSubmissionMessage] = useState("");
+  const [toggleGetPostPreview, setToggleGetPostPreview] = useState(true);
 
   const { getAccessTokenSilently } = useAuth0();
 
@@ -54,34 +55,42 @@ const UpdateContractPost = (props) => {
           },
         }
       );
+
       setSubmissionMessage(res.data);
       if (res.data !== "Post Link Submitted")
         setShowSubmitPostLinkButton(false);
+
+      if (res.data) {
+        setTimeout(function () {
+          setToggleGetPostPreview(!toggleGetPostPreview);
+        }, 1000);
+      }
     } catch (e) {
       console.log(e.message);
     }
-
+    props.setToggleGetContract(!props.toggleGetContract);
     setPostDate("");
     setDescription("");
     setPostLink("");
-    props.setToggleGetContract(!props.toggleGetContract);
   };
 
   return (
-    <div>
+    <div className="add-contract-form">
       {showSubmitPostLinkButton && (
         <form onSubmit={handleSubmit}>
           {selectedContract && `Contract No: ${selectedContract}`}
           <br />
-          Post Date:{" "}
-          <input
-            type="date"
-            name="postDate"
-            value={postDate}
-            // min={currDate}
-            onChange={handleChange}
-            required
-          />
+          <div>
+            <label>Post Date:</label>
+            <input
+              type="date"
+              name="postDate"
+              value={postDate}
+              // min={currDate}
+              onChange={handleChange}
+              required
+            />
+          </div>
           <br />
           Description:{" "}
           <input
@@ -118,12 +127,14 @@ const UpdateContractPost = (props) => {
         setShowSubmitPostLinkButton={setShowSubmitPostLinkButton}
         setSelectedContract={setSelectedContract}
         toggleGetContract={props.toggleGetContract}
+        toggleGetPostPreview={toggleGetPostPreview}
       />
       <ContractsList
         filter="creatorContractAll"
         page="home"
         userEmail={props.userEmail}
         toggleGetContract={props.toggleGetContract}
+        toggleGetPostPreview={toggleGetPostPreview}
       />
     </div>
   );

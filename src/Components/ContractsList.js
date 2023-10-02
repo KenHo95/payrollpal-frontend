@@ -23,7 +23,7 @@ const ContractsList = (props) => {
   useEffect(() => {
     getContracts();
     return;
-  }, [props.toggleGetContract]);
+  }, [props.toggleGetContract, props.toggleGetPostPreview]);
 
   const getContracts = async () => {
     let data = [];
@@ -143,11 +143,13 @@ const ContractsList = (props) => {
         </TableCell>
 
         <TableCell>
-          {/* only show post preview button if contract is paid */}
+          {/* only show post preview button if contract have related post */}
           {contract.posts.length !== 0 && (
             <PostsPreview
               contract_id={contract.id}
               tiktokHandle={contract.creator.tiktok_handle}
+              toggleGetPostPreview={props.toggleGetPostPreview}
+              toggleGetContract={props.toggleGetContract}
             />
           )}
         </TableCell>

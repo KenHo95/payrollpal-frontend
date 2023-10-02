@@ -64,11 +64,7 @@ function App() {
       {isAuthenticated && (
         <NavBar user={user} userPermission={userPermission} />
       )}
-      <header
-        className={
-          isAuthenticated ? "after-auth-background" : "before-auth-background"
-        }
-      >
+      <header>
         {!isAuthenticated && (
           <div className="logo-container">
             <h1>💼</h1>
@@ -78,22 +74,19 @@ function App() {
               Empowering HR and Content Creators to Seamlessly Manage Payrolls
               and Projects, All in One Place. Log in to try our app now!
             </p>
+            <br />
+            <Button
+              variant="outlined"
+              onClick={() => loginWithRedirect()}
+              startIcon={<LoginRoundedIcon />}
+              size="large"
+            >
+              {isLoading ? "Loading ..." : "Log In"}
+            </Button>
           </div>
         )}
         <br />
-        {isLoading && <div>Loading ...</div>}
 
-        {!isAuthenticated && (
-          <Button
-            variant="outlined"
-            startIcon={<LoginRoundedIcon />}
-            onClick={() => loginWithRedirect()}
-            Button
-            size="large"
-          >
-            Log In
-          </Button>
-        )}
         {isAuthenticated && (
           <Routes>
             <Route

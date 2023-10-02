@@ -33,11 +33,11 @@ const Charts = (props) => {
   };
 
   const getData = async () => {
-    console.log(props.userPermission);
+    // console.log(props.userPermission);
     let res,
       res2 = [];
 
-    // get data for current fiscal year
+    // get current fiscal year to filter data on
     const currFiscalYear = new Date().getFullYear();
 
     if (props.userPermission === "Creator") {
@@ -59,29 +59,6 @@ const Charts = (props) => {
     setContractVsPaymentData(res.data);
     setCategoriesData(res2.data);
   };
-
-  // const data = [
-  //   {
-  //     month: "Jan",
-  //     sumContractAmount: 590,
-  //     sumPaymentAmount: 800,
-  //     ph: 200,
-  //     // amt: 1400,
-  //     // cnt: 490,
-  //   },
-  //   {
-  //     month: "Feb",
-  //     sumContractAmount: 868,
-  //     sumPaymentAmount: 967,
-  //     ph: 200,
-  //   },
-  //   {
-  //     month: "Mar",
-  //     sumContractAmount: 1397,
-  //     sumPaymentAmount: 1098,
-  //     ph: 200,
-  //   },
-  // ];
 
   const barChartColors = [
     // {colours from https://coolors.co/574d68-a38560-c6a15b-f2e86d-d3dfb8}
@@ -126,7 +103,7 @@ const Charts = (props) => {
       </div>
       <br />
       <div className="chart-title">
-        <h4>Categories Breakdown (Count)</h4>
+        <h4>Contract Categories Breakdown (Count)</h4>
       </div>
       <div className="Charts">
         <BarChart

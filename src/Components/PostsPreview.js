@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { BACKEND_URL } from "../constants.js";
 import axios from "axios";
@@ -22,7 +21,7 @@ const PostsPreview = (props) => {
   useEffect(() => {
     getPostURL();
     return;
-  }, []);
+  }, [props.toggleGetPostPreview, props.toggleGetContract]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,17 +30,15 @@ const PostsPreview = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const URL = postsURL.map((postsURL, ind) => (
+  const content = postsURL.map((postsURL, ind) => (
     <div key={ind}>
       {/* Posts: */}
       <a href={postsURL.post_url} target="_blank" rel="noopener noreferrer">
-        {`Post ${ind}`}
+        {`Post ${ind + 1}`}
       </a>
       <p>{postsURL.description}</p>
       <TikTok url={postsURL.post_url} />
-      {/* <TikTok
-        url={postsURL.post_url} 
-      /> */}
+      <em>Post may take up to 5 seconds to load</em>
       <br />
     </div>
   ));
@@ -56,12 +53,7 @@ const PostsPreview = (props) => {
         aria-describedby="contract-preview-description"
       >
         <DialogTitle id="contract-preview-title">Preview</DialogTitle>
-        <DialogContent>
-          {URL}
-          {/* <DialogContentText id="contract-preview-description">
-            <p>Contract Id: {props.contract_id}</p>
-          </DialogContentText> */}
-        </DialogContent>
+        <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
         </DialogActions>

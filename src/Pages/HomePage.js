@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 
@@ -30,8 +29,9 @@ const HomePage = (props) => {
       {props.userPermission && <Charts userPermission={props.userPermission} />}
       <br />
       <br />
+      {/* for demo to simulate batch payment */}
       {props.userPermission === "Content Manager" && (
-        <Button variant="outlined" Button size="large" onClick={handleClick}>
+        <Button variant="outlined" size="large" onClick={handleClick}>
           Simulate Batch payment
         </Button>
       )}
@@ -49,6 +49,7 @@ const HomePage = (props) => {
           <CreatorUpdatePostPage
             userEmail={user.email}
             toggleGetContract={toggleGetContract}
+            setToggleGetContract={setToggleGetContract}
           />
         </div>
       )}

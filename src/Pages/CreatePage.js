@@ -49,7 +49,8 @@ const CreatePage = () => {
           <div className="button-wrapper">
             <Button
               variant="contained"
-              sx={{ marginBottom: 2 }}
+              sx={{ marginBottom: 4 }}
+              size="large"
               onClick={handleShowContractForm}
             >
               Contract Form
@@ -57,7 +58,7 @@ const CreatePage = () => {
             <div className="button-wrapper">
               <Button
                 variant="contained"
-                sx={{ marginBottom: 2 }}
+                size="large"
                 onClick={handleShowCreatorForm}
               >
                 Creator Form
@@ -66,7 +67,9 @@ const CreatePage = () => {
           </div>
         )}
         {(showCreatorForm || showContractForm) && (
-          <button onClick={handleCloseForms}>x</button>
+          <Button variant="contained" color="info" onClick={handleCloseForms}>
+            Back
+          </Button>
         )}
       </div>
       {showCreatorForm && <AddCreatorForm />}
