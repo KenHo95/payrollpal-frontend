@@ -50,4 +50,4 @@ To run the 💼 PayrollPal locally, follow these steps:
 
 ## 🧠 ERD
 
-![alt text](src/Assets/erd.png)
+![alt text](src/assets/erd.png)
