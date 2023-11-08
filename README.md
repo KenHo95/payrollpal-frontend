@@ -4,6 +4,10 @@
 
 A WebApp that streamlines contract management and automates payments for TikTok creators, simplifying the administrative process of tracking contract details, approvals, and payments while reducing errors and saving time.
 
+![alt text](src/assets/payrollpal-insights.gif)
+
+![alt text](src/assets/payrollpal-post-preview.gif)
+
 ## 💻 Technologies Used
 
 💼 PayrollPal Frontend is built using the following technologies:
