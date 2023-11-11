@@ -33,7 +33,6 @@ const Charts = (props) => {
   };
 
   const getData = async () => {
-    // console.log(props.userPermission);
     let res,
       res2 = [];
 

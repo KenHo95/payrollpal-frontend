@@ -11,6 +11,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import HelpIcon from "@mui/icons-material/Help";
+
 import PDFButton from "../Components/PDFButton.js";
 import PostsPreview from "../Components/PostsPreview";
 
@@ -125,23 +129,16 @@ const ContractsList = (props) => {
             </Button>
           </TableCell>
         )}
-        {/* only show approve button in approve page */}
-        {props.filter === "pendingApproval" && (
+        {/* only show download payslip button if contract is paid */}
+        {props.page !== "approve" && (
           <TableCell>
-            <Button onClick={() => handleApproveButtonClick(contract.id)}>
-              APPROVE
-            </Button>
+            {contract.contract_status === "Paid" ? (
+              <PDFButton contract={contract} />
+            ) : (
+              <p className="placeholderText">1</p>
+            )}
           </TableCell>
         )}
-        {/* only show download payslip button if contract is paid */}
-        <TableCell>
-          {contract.contract_status === "Paid" ? (
-            <PDFButton contract={contract} />
-          ) : (
-            <p className="placeholderText">1</p>
-          )}
-        </TableCell>
-
         <TableCell>
           {/* only show post preview button if contract have related post */}
           {contract.posts.length !== 0 && (
@@ -153,6 +150,14 @@ const ContractsList = (props) => {
             />
           )}
         </TableCell>
+        {/* only show approve button in approve page */}
+        {props.filter === "pendingApproval" && (
+          <TableCell>
+            <Button onClick={() => handleApproveButtonClick(contract.id)}>
+              APPROVE
+            </Button>
+          </TableCell>
+        )}
       </TableRow>
     );
   });
@@ -166,6 +171,82 @@ const ContractsList = (props) => {
     tableHeading = "Contracts In Progress";
   }
 
+  // popover
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+
+  const contractStatuses = [
+    <p>
+      <strong>
+        <em>In Progress</em>
+      </strong>
+      : Contract pending Creator post(s)
+    </p>,
+    <p>
+      <strong>
+        <em>Pending Approval</em>
+      </strong>
+      : Creator posted, Pending Content Manager approval
+    </p>,
+    <p>
+      <strong>
+        <em>Approved</em>
+      </strong>
+      : Content Manager approved, Pending daily automated batch payment process
+    </p>,
+    <p>
+      <strong>
+        <em>Paid</em>
+      </strong>
+      : Contract paid
+    </p>,
+  ];
+
+  const popover = (
+    <div>
+      <Typography
+        aria-owns={open ? "mouse-over-popover" : undefined}
+        aria-haspopup="true"
+        onMouseEnter={handlePopoverOpen}
+        onMouseLeave={handlePopoverClose}
+      >
+        Status <HelpIcon color="primary"></HelpIcon>
+      </Typography>
+      <Popover
+        id="mouse-over-popover"
+        sx={{
+          pointerEvents: "none",
+        }}
+        open={open}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        onClose={handlePopoverClose}
+        disableRestoreFocus
+      >
+        <ol>
+          {contractStatuses.map((status, ind) => (
+            <Typography key={ind} sx={{ p: 1 }}>
+              <li>{status}</li>
+            </Typography>
+          ))}
+        </ol>
+      </Popover>
+    </div>
+  );
+
   return (
     <div>
       <h3>{tableHeading}</h3>
@@ -178,14 +259,18 @@ const ContractsList = (props) => {
               <TableCell align="left">Description</TableCell>
               <TableCell align="left">Amount ($SGD)</TableCell>
               {!props.userEmail && <TableCell align="left">Creator</TableCell>}
-              <TableCell align="left">Status</TableCell>
+              <TableCell align="left">{popover}</TableCell>
               <TableCell align="left">Start Date</TableCell>
               <TableCell align="left">End Date</TableCell>
               <TableCell align="left">Post Required (Qty)</TableCell>
               {!props.userEmail && <TableCell align="left">Category</TableCell>}
-              <TableCell align="left"></TableCell>
-              <TableCell align="left"></TableCell>
-              {props.page === "approve" && <TableCell align="left"></TableCell>}
+              {props.page !== "approve" && (
+                <TableCell align="left">Payslip</TableCell>
+              )}
+              <TableCell align="left">Preview</TableCell>
+              {props.page === "approve" && (
+                <TableCell align="left">Approve</TableCell>
+              )}
             </TableRow>
           </TableHead>
           <TableBody>{contractList}</TableBody>

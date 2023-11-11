@@ -34,7 +34,6 @@ const AddContractForm = () => {
   const getCreators = async () => {
     const res = await axios.get(`${BACKEND_URL}/creators/nameAndTiktokHandle`);
     setCreators(res.data);
-    // console.log(res.data);
   };
 
   // creator name dropdown list values
@@ -80,10 +79,6 @@ const AddContractForm = () => {
         audience: process.env.REACT_APP_API_AUDIENCE,
         scope: "write:contract",
       });
-
-      // var decoded = jwt_decode(accessToken);
-      // console.log(accessToken);
-      // console.log(decoded);
 
       // Extract only category IDs to send to backend
       const selectedCategoryIds = selectedCategories.map(({ value }) => value);
@@ -161,87 +156,6 @@ const AddContractForm = () => {
   };
 
   return (
-    // <div>
-    //   {/* {console.log(currDate)} */}
-    //   Add Contract
-    //   <br />
-    //   <br />
-    //   <form onSubmit={handleSubmit}>
-    //     Description:{" "}
-    //     <input
-    //       type="text"
-    //       name="description"
-    //       value={description}
-    //       onChange={handleChange}
-    //       minLength="8"
-    //       required
-    //     />
-    //     <br />
-    //     {"Amount ($SGD):"}{" "}
-    //     <input
-    //       type="number"
-    //       name="amountSgd"
-    //       value={amountSgd}
-    //       onChange={handleChange}
-    //       min="1"
-    //       step="0.01"
-    //       required
-    //     />
-    //     <br />
-    //     Start Date:{" "}
-    //     <input
-    //       type="date"
-    //       name="startDate"
-    //       value={startDate}
-    //       min={currDate}
-    //       onChange={handleChange}
-    //       required
-    //     />
-    //     <br />
-    //     End Date:{" "}
-    //     <input
-    //       type="date"
-    //       name="endDate"
-    //       value={endDate}
-    //       min={startDate}
-    //       onChange={handleChange}
-    //       required
-    //     />
-    //     <br />
-    //     Number Of Post Required:{" "}
-    //     <input
-    //       type="number"
-    //       name="noOfPostRequired"
-    //       value={noOfPostRequired}
-    //       onChange={handleChange}
-    //       min="1"
-    //       required
-    //     />
-    //     <br />
-    //     Creator:{" "}
-    //     <select name="creators" onChange={handleChange}>
-    //       {creatorsDropdownList}
-    //     </select>
-    //     <br />
-    //     <br />
-    //     Categories:{" "}
-    //     <CreatableSelect
-    //       isMulti
-    //       isClearable
-    //       styles={selectFieldStyles}
-    //       options={categoryOptions}
-    //       value={selectedCategories}
-    //       onChange={(categories) => {
-    //         setSelectedCategories(categories);
-    //       }}
-    //       onCreateOption={handleCreate}
-    //       isDisabled={isLoading}
-    //       isLoading={isLoading}
-    //     />
-    //     <br />
-    //     <input type="submit" value="Submit" />
-    //   </form>
-    // </div>
     <div className="add-contract-form">
       <h2>Add Contract</h2>
       <form onSubmit={handleSubmit}>

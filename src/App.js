@@ -5,6 +5,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import jwt_decode from "jwt-decode";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import Button from "@mui/material/Button";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
 
 import HomePage from "./Pages/HomePage";
 import CreatePage from "./Pages/CreatePage";
@@ -55,6 +57,83 @@ function App() {
     return;
   }, [getAccessTokenSilently, user?.sub]);
 
+  // popover
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+
+  const contractStatuses = [
+    <p>
+      <strong>
+        <em>Payroll Admin</em>
+      </strong>
+      <br />
+      Actions: Create contract/ creator
+      <br />
+      Email: payrolladmin@gmail.com
+      <br />
+      Password: bavdu5-naskUb-funwok
+    </p>,
+    <p>
+      <strong>
+        <em>Content Manager</em>
+      </strong>
+      <br />
+      Actions: View Insights, Preview creator post, Approve contract, Simulate
+      batch payment
+      <br />
+      Email: content_manager@gmail.com
+      <br />
+      Password: Jezwig-potqah-takno1
+    </p>,
+    <p>
+      <strong>
+        <em>Content Creator</em>
+      </strong>
+      <br />
+      Actions: Upload Tiktok post link, Download Payslip
+      <br />
+      Email: yk@gmail.com
+      <br />
+      Password: tUtpys-nencub-zevfy6
+    </p>,
+  ];
+
+  const popover = (
+    <div>
+      <br />
+      <Button variant="contained" onClick={handlePopoverOpen}>
+        Demo Credentials
+      </Button>
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        onClose={handlePopoverClose}
+      >
+        <ol>
+          {contractStatuses.map((status, ind) => (
+            <Typography key={ind} sx={{ p: 1 }}>
+              <li>{status}</li>
+            </Typography>
+          ))}
+        </ol>
+      </Popover>
+    </div>
+  );
+
   return (
     <div
       className={`App ${
@@ -83,6 +162,7 @@ function App() {
             >
               {isLoading ? "Loading ..." : "Log In"}
             </Button>
+            {popover}
           </div>
         )}
         <br />

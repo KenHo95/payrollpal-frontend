@@ -1,38 +1,3 @@
-// import React from "react";
-// import { PDFDownloadLink, Document, Page, Text } from "@react-pdf/renderer";
-
-// const PDFButton = (props) => {
-//   const PayslipPDF = (contract) => {
-//     return (
-//       <Document>
-//         <Page>
-//           <Text>Employee Name: {contract.creator.name}</Text>
-//           <Text>Amount (SGD): {contract.amount_sgd}</Text>
-//           <Text>
-//             Translated Amount ({contract.payment.payee_currency}):{" "}
-//             {contract.payment.translated_amount}
-//           </Text>
-//           <Text>Start Date: {contract.start_date}</Text>
-//           <Text>Email: {contract.creator.email}</Text>
-//           <Text>Payment Date: {contract.payment.payment_date}</Text>
-//         </Page>
-//       </Document>
-//     );
-//   };
-
-//   return (
-//     <div>
-//       <PDFDownloadLink
-//         document={PayslipPDF(props.contract)}
-//         fileName={`payslip_${props.creator_id}.pdf`}
-//       >
-//         {({ loading }) => (loading ? "Generating PDF..." : "Download Payslip")}
-//       </PDFDownloadLink>
-//     </div>
-//   );
-// };
-
-// export default PDFButton;
 import React from "react";
 import {
   PDFDownloadLink,
@@ -52,18 +17,18 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica",
   },
   header: {
-    fontSize: 18,
+    fontSize: 20,
     marginBottom: 10,
     fontWeight: "bold",
     textDecoration: "underline",
   },
   label: {
-    fontSize: 14,
+    fontSize: 18,
     marginBottom: 5,
     fontWeight: "bold",
   },
   value: {
-    fontSize: 14,
+    fontSize: 18,
     marginBottom: 10,
   },
   // Style for the download button
@@ -90,18 +55,22 @@ const PayslipPDF = (contract) => {
         <Text style={styles.header}>Payslip</Text>
         <Text style={styles.label}>Employee Name:</Text>
         <Text style={styles.value}>{contract.creator.name}</Text>
+        <Text style={styles.label}>Email:</Text>
+        <Text style={styles.value}>{contract.creator.email}</Text>
+        <Text style={styles.label}>Contract Id:</Text>
+        <Text style={styles.value}>{contract.id}</Text>
+        <Text style={styles.label}>Contract Start Date:</Text>
+        <Text style={styles.value}>{contract.start_date.slice(0, 10)}</Text>
+        <Text style={styles.label}>Payment Date:</Text>
+        <Text style={styles.value}>
+          {contract.payment?.payment_date.slice(0, 10)}
+        </Text>
         <Text style={styles.label}>Amount (SGD):</Text>
         <Text style={styles.value}>{contract.amount_sgd}</Text>
         <Text style={styles.label}>
-          Translated Amount ({contract.payment.payee_currency}):
+          Translated Amount ({contract.payment?.payee_currency}):
         </Text>
-        <Text style={styles.value}>{contract.payment.translated_amount}</Text>
-        <Text style={styles.label}>Start Date:</Text>
-        <Text style={styles.value}>{contract.start_date}</Text>
-        <Text style={styles.label}>Email:</Text>
-        <Text style={styles.value}>{contract.creator.email}</Text>
-        <Text style={styles.label}>Payment Date:</Text>
-        <Text style={styles.value}>{contract.payment.payment_date}</Text>
+        <Text style={styles.value}>{contract.payment?.translated_amount}</Text>
       </Page>
     </Document>
   );
@@ -112,7 +81,7 @@ const PDFButton = (props) => {
     <div>
       <PDFDownloadLink
         document={PayslipPDF(props.contract)}
-        fileName={`payslip_${props.creator_id}.pdf`}
+        fileName={`payslip_${props.contract.creator.name}_${props.contract.id}.pdf`}
       >
         {({ loading }) =>
           loading ? (
@@ -121,8 +90,15 @@ const PDFButton = (props) => {
             <Button
               variant="contained"
               color="primary"
-              startIcon={<DownloadRoundedIcon />}
-            ></Button>
+              style={{
+                maxWidth: "30px",
+                maxHeight: "30px",
+                minWidth: "30px",
+                minHeight: "30px",
+              }}
+            >
+              <DownloadRoundedIcon />
+            </Button>
           )
         }
       </PDFDownloadLink>

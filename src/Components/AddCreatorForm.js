@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-
-// import Button from "@mui/material/Button";
 import { BACKEND_URL } from "../constants";
 
 const AddCreatorForm = () => {
@@ -91,74 +88,6 @@ const AddCreatorForm = () => {
   };
 
   return (
-    // <div>
-    //   Add Creator
-    //   <br />
-    //   <br />
-    //   <form onSubmit={handleSubmit}>
-    //     Name:{" "}
-    //     <input type="text" name="name" value={name} onChange={handleChange} />
-    //     <br />
-    //     Tiktok Handle:{" "}
-    //     <input
-    //       type="text"
-    //       name="tiktokHandle"
-    //       value={tiktokHandle}
-    //       onChange={handleChange}
-    //       required
-    //     />
-    //     <br />
-    //     Email:{" "}
-    //     <input type="text" name="email" value={email} onChange={handleChange} />
-    //     <br />
-    //     Address:{" "}
-    //     <input
-    //       type="text"
-    //       name="address"
-    //       value={address}
-    //       onChange={handleChange}
-    //       required
-    //     />
-    //     <br />
-    //     Bank Account Number:{" "}
-    //     <input
-    //       type="text"
-    //       name="bankAccountNum"
-    //       value={bankAccountNum}
-    //       onChange={handleChange}
-    //       required
-    //     />
-    //     <br />
-    //     Bank Identifier Code:{" "}
-    //     <input
-    //       type="text"
-    //       name="bankIdentifierCode"
-    //       value={bankIdentifierCode}
-    //       onChange={handleChange}
-    //       required
-    //     />
-    //     <br />
-    //     Bank Name:{" "}
-    //     <input
-    //       type="text"
-    //       name="bankName"
-    //       value={bankName}
-    //       onChange={handleChange}
-    //       required
-    //     />
-    //     <br />
-    //     Residence Country:{" "}
-    //     <input
-    //       type="text"
-    //       name="residenceCountry"
-    //       value={residenceCountry}
-    //       onChange={handleChange}
-    //       required
-    //     />
-    //     <br />
-    //     <input type="submit" value="Submit" />
-    //   </form>
-    // </div>
     <div className="add-creator-form">
       <h2>Add Creator</h2>
       <form onSubmit={handleSubmit}>

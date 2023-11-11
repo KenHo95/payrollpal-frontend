@@ -1,23 +1,3 @@
-// import AddCreatorForm from "../Components/AddCreatorForm";
-// import AddContractForm from "../Components/AddContractForm";
-
-// const CreatePage = () => {
-//   return (
-//     <div>
-//       <br />
-//       <br />
-//       <AddContractForm />
-//       <br />
-//       <br />
-//       <AddCreatorForm />
-//       <br />
-//       <br />
-//     </div>
-//   );
-// };
-
-// export default CreatePage;
-
 import React, { useState } from "react";
 import AddCreatorForm from "../Components/AddCreatorForm";
 import AddContractForm from "../Components/AddContractForm";
@@ -53,7 +33,7 @@ const CreatePage = () => {
               size="large"
               onClick={handleShowContractForm}
             >
-              Contract Form
+              Contract
             </Button>
             <div className="button-wrapper">
               <Button
@@ -61,7 +41,7 @@ const CreatePage = () => {
                 size="large"
                 onClick={handleShowCreatorForm}
               >
-                Creator Form
+                Creator
               </Button>
             </div>
           </div>
